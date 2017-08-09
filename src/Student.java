@@ -1,11 +1,13 @@
 /**
- * Created by johnclayton on 8/6/17.
+ * Created by John Clayton 07/30/2017.
+ * This program manages a student database by being able to 
+ * Insert, Delete, Find, and Update records. 
  */
 import java.text.*;
 
 public class Student {
 
-    //Declare variables for the different attributes of Student.
+    //Declare variables to be used.
     private String name;
     private String major;
     private int totalCredits;
