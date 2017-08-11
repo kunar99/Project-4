@@ -14,12 +14,12 @@ import java.util.HashMap;
 public class StudentDatabase extends JPanel implements ActionListener {
 
     //Creates the Test Fields 
-    private JTextField idField = new JTextField(10);
-    private JTextField nameField = new JTextField(10);
-    private JTextField majorField = new JTextField(10);
+    private JTextField idFld = new JTextField(10);
+    private JTextField nameFld = new JTextField(10);
+    private JTextField majorFld = new JTextField(10);
 
     //Creation of the Dropdown Menu
-    private JComboBox<String> optionDropdown;
+    private JComboBox<String> optionDpdn;
 
     //Creation of the Hashmap
     HashMap<Integer, Student> database = new HashMap<Integer, Student>();
@@ -32,37 +32,37 @@ public class StudentDatabase extends JPanel implements ActionListener {
         this.setBorder(padding);
 
         //Creating the Label names to be used.
-        JLabel idLabel = new JLabel("ID:");
-        JLabel nameLabel = new JLabel("Name:");
-        JLabel majorLabel = new JLabel("Major:");
-        JLabel selectionLabel = new JLabel("Choose Selection:");
+        JLabel idLbl = new JLabel("ID:");
+        JLabel nameLbl = new JLabel("Name:");
+        JLabel majorLbl = new JLabel("Major:");
+        JLabel selectionLbl = new JLabel("Choose Selection:");
 
         //Creating the Text names to be used. 
-        idField.setText("");
-        nameField.setText("");
-        majorField.setText("");
+        idFld.setText("");
+        nameFld.setText("");
+        majorFld.setText("");
 
         //Creating the dropdown options for the JComboBox constructor.
         String[] options = {"Insert","Delete","Find","Update"};
-        optionDropdown = new JComboBox<String>(options);
+        optionDpdn = new JComboBox<String>(options);
 
         //Default to Insert.
-        optionDropdown.setSelectedIndex(0);
+        optionDpdn.setSelectedIndex(0);
 
         //Create a button that triggers the appropriate action.
-        JButton processButton = new JButton("Process Request");
-        processButton.addActionListener(this);
+        JButton processBtn = new JButton("Process Request");
+        processBtn.addActionListener(this);
 
         //Adding Label, Field, Dropdown, and Button elements to the panel.
-        add(idLabel);
-        add(idField);
-        add(nameLabel);
-        add(nameField);
-        add(majorLabel);
-        add(majorField);
-        add(selectionLabel);
-        add(optionDropdown);
-        add(processButton);
+        add(idLbl);
+        add(idFld);
+        add(nameLbl);
+        add(nameFld);
+        add(majorLbl);
+        add(majorFld);
+        add(selectionLbl);
+        add(optionDpdn);
+        add(processBtn);
     }
 
     public static void main(String args[]) {
@@ -82,72 +82,72 @@ public class StudentDatabase extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
        
-        JFrame popupFrame = new JFrame();    //Creating a frame for the popups
+        JFrame jOptFrame = new JFrame();    //Creating a frame for the JOption Frame
 
-        //Check to see if idField contains an integer. 
+        //Check to see if idFld contains an integer.
         try {
-            int key = Integer.parseInt(idField.getText());
+            int key = Integer.parseInt(idFld.getText());
 
             //Initializing variables to be used. 
-            String currentOption = optionDropdown.getSelectedItem().toString();
-            String name = nameField.getText();
-            String major = majorField.getText();
+            String option = optionDpdn.getSelectedItem().toString();
+            String name = nameFld.getText();
+            String major = majorFld.getText();
 
-            if (currentOption.equals("Insert")) {             
+            if (option.equals("Insert")) {
                 
                 if (!name.equals("") && !major.equals("")) {  //Fields cannot be empty.
                     
                     if (database.containsKey(key)) {  //Ensuring the entered ID is not currently in Dbase.
                         
-                        invalidId(popupFrame, currentOption);  //If ID is in Dbase, inform the user.
+                        invalidId(jOptFrame, option);  //If ID is in Dbase, inform the user.
                     }
                     else {
                         //If ID is not in Dbase, insert the student into the database.
                         database.put(key, new Student(name, major));
-                        JOptionPane.showMessageDialog(popupFrame, "Insertion of Student " + key + ": " + database.get(key).toString() + " successful.");
-                        clearFields(popupFrame, currentOption, name, major);
+                        JOptionPane.showMessageDialog(jOptFrame, "Insertion of Student " + key + ": " + database.get(key).toString() + " successful.");
+                        clearFields(jOptFrame, option, name, major);
                     }
 
                     //Ensures fields are not empty and will prompt user.
                 }
                 else if (name.equals("") && major.equals("")) {
-                    JOptionPane.showMessageDialog(popupFrame, "Please put a name and major in the appropriate fields.");
+                    JOptionPane.showMessageDialog(jOptFrame, "Please put a name and major in the appropriate fields.");
                 }
                 else if (name.equals("")) {
-                    JOptionPane.showMessageDialog(popupFrame, "Please put a name in the appropriate field.");
+                    JOptionPane.showMessageDialog(jOptFrame, "Please put a name in the appropriate field.");
                 }
                 else if (major.equals("")) {
-                    JOptionPane.showMessageDialog(popupFrame, "Please put a major in the appropriate field.");
+                    JOptionPane.showMessageDialog(jOptFrame, "Please put a major in the appropriate field.");
                 }
             }
-            else if (currentOption.equals("Delete")) {
+            else if (option.equals("Delete")) {
                
                 if (database.containsKey(key)) {
                     //If key is present, inform the user which Student will be removed.
-                    JOptionPane.showMessageDialog(popupFrame, "Student " + key + ": " + database.get(key).toString() + " will be removed.");
+                    JOptionPane.showMessageDialog(jOptFrame, "Student " + key + ": " + database.get(key).toString() + " will be removed.");
                     database.remove(key);
                 }
                 else {
                     
-                    invalidId(popupFrame, currentOption); //If it isn't present, informs the user.
+                    invalidId(jOptFrame, option); //If it isn't present, informs the user.
                 }
 
-                clearFields(popupFrame, currentOption, name, major);
+                clearFields(jOptFrame, option, name, major);
             }
-            else if (currentOption.equals("Find")) {
+            else if (option.equals("Find")) {
                
                 if (database.containsKey(key)) {
                     //If the key is present, return the student's information.
-                    JOptionPane.showMessageDialog(popupFrame, "Student " + key + ": " + database.get(key).toString());
+                    JOptionPane.showMessageDialog(jOptFrame, "Student " + key + ": " + database.get(key).toString());
                 }
                 else {
                     
-                    invalidId(popupFrame, currentOption); //If it isn't present, inform the user.
+                    invalidId(jOptFrame, option); //If it isn't present, inform the user.
                 }
 
-                clearFields(popupFrame, currentOption, name, major);
+                clearFields(jOptFrame, option, name, major);
             }
-            else if (currentOption.equals("Update")) {
+            else if (option.equals("Update")) {
                 
                 if (database.containsKey(key)) {
                     
@@ -158,29 +158,29 @@ public class StudentDatabase extends JPanel implements ActionListener {
                             JOptionPane.INFORMATION_MESSAGE, null, gradeChoices, gradeChoices[0]);
 
                     //Creates an array to maintain the credit values.
-                    Object[] creditsChoices = {3,6};
+                    Object[] creditOpt = {3,6};
 
                     //JOption will display window to select the credit value input.
                     int credits = (int)JOptionPane.showInputDialog(null, "Choose credits:", "Credits",
-                            JOptionPane.INFORMATION_MESSAGE, null, creditsChoices, creditsChoices[0]);
+                            JOptionPane.INFORMATION_MESSAGE, null, creditOpt, creditOpt[0]);
 
                    
                     database.get(key).courseCompleted(grade, credits);   //Updates student record with given values.
 
                     //Display the student info with the updated GPA and inform the user that the update occurred.
-                    JOptionPane.showMessageDialog(popupFrame, "Student " + key + ": " + database.get(key).toString() + ". Update complete.");
+                    JOptionPane.showMessageDialog(jOptFrame, "Student " + key + ": " + database.get(key).toString() + ". Update complete.");
                 
                 }else {
-                    invalidId(popupFrame, currentOption);
+                    invalidId(jOptFrame, option);
                 }
 
-                clearFields(popupFrame, currentOption, name, major);
+                clearFields(jOptFrame, option, name, major);
             }
         }
 
         //Incorrect value entered in for IdField.
         catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(popupFrame, "Please put an integer into the ID field.");
+            JOptionPane.showMessageDialog(jOptFrame, "Please put an integer into the ID field.");
         }
     }
     
@@ -195,8 +195,8 @@ public class StudentDatabase extends JPanel implements ActionListener {
 
     //Clears fields 
     public void clearFields(JFrame frame, String option, String name, String major) {
-        nameField.setText("");
-        majorField.setText("");
+        nameFld.setText("");
+        majorFld.setText("");
 
         //If an option other than Insert is being used, inform the user that name and major are only used for Insert.
         if (!option.equals("Insert") && (!name.equals("") || !major.equals(""))) {

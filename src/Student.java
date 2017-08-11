@@ -10,42 +10,42 @@ public class Student {
     //Declare variables to be used.
     private String name;
     private String major;
-    private int totalCredits;
-    private int qualityPoints;
+    private int credit;
+    private int points;
 
     //Initialize these variables based on passed values.
     public Student(String name, String major) {
-        totalCredits = 0;
-        qualityPoints = 0;
+        credit = 0;
+        points = 0;
         this.name = name;
         this.major = major;
     }
 
     //Accepts a grade and credit value for a course and adds the correct amount to the totalCredit and qualityPoint variables.
     public void courseCompleted(char grade, int credits) {
-        totalCredits += credits;
+        credit += credits;
 
         if (grade == 'A') {
-            qualityPoints += (4*credits);
+            points += (4*credits);
         }
         else if (grade == 'B') {
-            qualityPoints += (3*credits);
+            points += (3*credits);
         }
         else if (grade == 'C') {
-            qualityPoints += (2*credits);
+            points += (2*credits);
         }
         else if (grade == 'D') {
-            qualityPoints += (1*credits);
+            points += (1*credits);
         }
         else if (grade == 'F') {
-            qualityPoints += (0*credits);
+            points += (0*credits);
         }
     }
 
     private double calculateGPA() {
         //If the student has taken courses, calculate GPA.
-        if(totalCredits != 0) {
-            return (double)qualityPoints/totalCredits;
+        if(credit != 0) {
+            return (double) points / credit;
         }
         //Otherwise, default the GPA to 4.0.
         else {
